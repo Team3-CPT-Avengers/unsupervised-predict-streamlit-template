@@ -31,7 +31,8 @@ import streamlit as st
 # Data handling dependencies
 import pandas as pd
 import numpy as np
-
+import surprise
+from surprise import Reader, Dataset
 # Custom Libraries
 from utils.data_loader import load_movie_titles
 from recommenders.collaborative_based import collab_model
