@@ -107,6 +107,179 @@ def main():
 
     # You may want to add more sections here for aspects such as an EDA,
     # or to provide your business pitch.
+    if page_selection == "EDA":
+
+
+        st.markdown("""# Rating Distributions""")
+        data = train['rating'].value_counts().sort_index(ascending=False)
+        trace = go.Bar(x = data.index,
+                       text = ['{:.1f} %'.format(val) for val in (data.values / train.shape[0] * 100)],
+                       textposition = 'auto',
+                       textfont = dict(color = '#000000'),
+                       y = data.values,
+                       )
+        # Create layout
+        layout = dict(title = 'Distribution Of {} movie-ratings'.format(train.shape[0]),
+                      xaxis = dict(title = 'Rating'),
+                      yaxis = dict(title = 'Count'))
+        # Create plot
+        fig = go.Figure(data=[trace], layout=layout)
+        st.plotly_chart(fig)
+
+        st.markdown(""" 
+
+            We can see that over 26% of all ratings in the data are 4, and very few ratings are 0.5, 1.0, 1.5, 2.5 and 3.0. 
+            Low rating movies mean they are generally really bad and not highly recommended by users.
+            """)
+
+
+
+
+
+        st.markdown("""#  Number of ratings per movie""")
+        data = train.groupby('movieId')['rating'].count().clip(upper=50)
+
+        # Create trace
+        trace = go.Histogram(x = data.values,
+                             name = 'Ratings',
+                             xbins = dict(start = 0,
+                                          end = 50,
+                                          size = 2))
+        # Create layout
+        layout = go.Layout(title = 'Distribution Of Number of Ratings Per movie (Clipped at 100)',
+                           xaxis = dict(title = 'Number of Ratings Per movie'),
+                           yaxis = dict(title = 'Count'),
+                           bargap = 0.2)
+
+        # Create plot
+        fig = go.Figure(data=[trace], layout=layout)
+        st.plotly_chart(fig)
+
+
+
+
+
+        st.markdown("""#  Number of ratings per user""")
+        data = train.groupby('userId')['rating'].count().clip(upper=50)
+
+        # Create trace
+        trace = go.Histogram(x = data.values,
+                             name = 'Ratings',
+                             xbins = dict(start = 0,
+                                          end = 50,
+                                          size = 2))
+        # Create layout
+        layout = go.Layout(title = 'Distribution Of Number of Ratings Per User (Clipped at 50)',
+                           xaxis = dict(title = 'Ratings Per User'),
+                           yaxis = dict(title = 'Count'),
+                           bargap = 0.2)
+
+        # Create plot
+        fig = go.Figure(data=[trace], layout=layout)
+        st.plotly_chart(fig)
+
+
+    if page_selection == "About Us":
+
+            st.markdown("# Data Lux")
+            st.markdown("## ")
+            st.markdown("""
+                Data Lux is an information technology company that provides an 
+                enterprise data science platform.
+
+                We transform how you consume data by building Information Systems 
+                that offer solutions for data collection, management and analysis.
+
+                Simply put, we transform data to inform action.
+            """)
+            st.markdown("## Mission")
+
+            st.markdown(""" 
+                We develop data analytics and machine learning solutions 
+                by aggregating disparate data sources to bring creativity and innovation in 
+                the management of any business """)
+
+            st.markdown("## Vision")
+
+            st.markdown(""" 
+                To become the most valuable data analytics partner in Africa and beyond.
+
+                     """)
+
+            st.markdown("## Values")
+
+            st.markdown(""" 
+                Customer Satisfaction, Respect & Honesty
+
+                     """)
+
+            st.markdown("## Team")
+
+
+
+            with st.container():
+                image_col, text_col = st.columns((1,2))
+                with image_col:
+                    st.image("resources/imgs/mama.jpeg")
+
+                with text_col:
+                    st.subheader("Diana Okeyo(Tech Lead)")
+                    st.write("""
+                        Data Lux Tech lead,
+                        Solutions Architect and Scrum Master
+                        """)
+                    
+            with st.container():
+                image_col, text_col = st.columns((1,2))
+                with image_col:
+                    st.image("resources/imgs/pic.jpeg")
+
+                with text_col:
+                    st.subheader("Raphael Mbonu (Ml Engineer)")
+                    st.write("""
+                        Senior Machine Learning and 
+                        Artificial Intelligence Developer
+                        """)
+                    
+            with st.container():
+                image_col, text_col = st.columns((1,2))
+                with image_col:
+                    st.image("resources/imgs/ed.jpeg")
+
+                with text_col:
+                    st.subheader("Edward Ogbei(Data analyst)")
+                    st.write("""
+                        Senior Data Analyst and
+                        QA Consultant
+                        """)
+                    
+            with st.container():
+                image_col, text_col = st.columns((1,2))
+                with image_col:
+                    st.image("resources/imgs/colin.jpeg")
+
+                with text_col:
+                    st.subheader("Colin Mburugu (UI/UX Designer)")
+                    st.write("""
+                        Senior User Interface/Experience Designer
+                        Cloud Engineer
+                        """)
+
+
+
+            with st.container():
+                image_col, text_col = st.columns((1,2))
+                with image_col:
+                    st.image("resources/imgs/gab.jpeg")
+
+                with text_col:
+                    st.subheader("Gabriel Asiegbu (Business Analyst)")
+                    st.write("""
+                        Business Analyst and
+                        Project Management lead
+                        """)
+                    
+
 
 
 if __name__ == '__main__':
